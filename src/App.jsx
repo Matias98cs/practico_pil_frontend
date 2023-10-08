@@ -3,16 +3,19 @@ import React, { lazy, Suspense } from "react";
 import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import AuthLayout from "./components/Layouts/AuthLayout";
+import { AuthProvider } from "./context/AuthProvider";
 
 function App() {
   return (
     <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<AuthLayout />}>
-          <Route index element={<Login />} />
-          <Route path="/home" element={<Home />} />
-        </Route>
-      </Routes>
+      <AuthProvider>
+        <Routes>
+          <Route path="/" element={<AuthLayout />}>
+            <Route index element={<Login />} />
+            <Route path="/home" element={<Home />} />
+          </Route>
+        </Routes>
+      </AuthProvider>
     </BrowserRouter>
   );
 }
