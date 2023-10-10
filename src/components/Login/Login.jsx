@@ -54,6 +54,9 @@ const Login = () => {
         />
         <input type="submit" value="Iniciar Sesion" />
       </form>
+      <nav>
+        <Link to="/registrar">Registrarse</Link>
+      </nav>
     </div>
   );
 };

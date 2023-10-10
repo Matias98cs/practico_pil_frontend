@@ -1,5 +1,6 @@
 import { Outlet, Navigate } from "react-router-dom";
 import useAuth from "../../hooks/useAuth";
+import Header from "../Header/Header";
 
 const RutaProtegida = () => {
   const { auth, cargando } = useAuth();
@@ -9,8 +10,8 @@ const RutaProtegida = () => {
     <>
       {auth.id ? (
         <div>
+          <Header />
           <main>
-            <h4>GOD</h4>
             <Outlet />
           </main>
         </div>
