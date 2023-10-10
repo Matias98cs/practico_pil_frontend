@@ -4,6 +4,7 @@ import Login from "./components/Login/Login";
 import Home from "./components/Home/Home";
 import AuthLayout from "./components/Layouts/AuthLayout";
 import { AuthProvider } from "./context/AuthProvider";
+import RutaProtegida from "./components/Layouts/RutaProtegida";
 
 function App() {
   return (
@@ -12,7 +13,10 @@ function App() {
         <Routes>
           <Route path="/" element={<AuthLayout />}>
             <Route index element={<Login />} />
-            <Route path="/home" element={<Home />} />
+          </Route>
+
+          <Route path="/home" element={<RutaProtegida />}>
+            <Route index element={<Home />} />
           </Route>
         </Routes>
       </AuthProvider>
