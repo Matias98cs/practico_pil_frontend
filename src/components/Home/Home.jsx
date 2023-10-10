@@ -1,7 +1,13 @@
+import useAuth from "../../hooks/useAuth";
+
 const Home = () => {
+  const { auth } = useAuth();
+  console.log(auth);
+
   return (
     <div>
       <h1>HOME ACADEMICO</h1>
+      <h4>Bienvenido {auth.username}</h4>
       <p>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Architecto
         excepturi itaque inventore, recusandae iure distinctio, officia mollitia

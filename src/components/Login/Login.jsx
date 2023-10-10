@@ -21,6 +21,7 @@ const Login = () => {
         username,
         password,
       });
+      setAuth(data.user);
       localStorage.setItem("token", data.access_token);
       setUsername("");
       setPassword("");

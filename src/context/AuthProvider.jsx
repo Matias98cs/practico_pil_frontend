@@ -21,8 +21,8 @@ const AuthProvider = ({ children }) => {
         },
       };
       try {
-        const { data } = await clienteAxios("login-jwt", config);
-        setAuth(data.user);
+        const { data } = await clienteAxios("perfil", config);
+        setAuth(data);
       } catch (error) {
         setAuth({});
       }
