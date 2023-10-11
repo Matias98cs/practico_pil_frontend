@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import clienteAxios from "../../config/ClienteAxios";
-import { Navigate, useNavigate } from "react-router-dom";
+import { Link, Navigate, useNavigate } from "react-router-dom";
 
 const Registrar = () => {
   const [username, setUsername] = useState("");
@@ -43,33 +43,105 @@ const Registrar = () => {
         console.log(err);
       });
   };
-
   return (
-    <div>
-      <h3>Crear tu cuenta para administrar los datos academicos</h3>
-      <form onSubmit={handleSubmit}>
-        <input
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          type="text"
-          placeholder="Ingreses un nombre de Usuario"
-        />
-        <input
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          type="password"
-          placeholder="Ingrese su Password"
-        />
-        <input
-          value={repetirPassword}
-          onChange={(e) => setRepetirPassword(e.target.value)}
-          type="password"
-          placeholder="Ingrese de nuevo su Password"
-        />
-        <input type="submit" value="Crear cuenta" />
+    <div className="fondo container-fluid">
+    <div className="Auth-form-container">
+      <form className="Auth-form" onSubmit={handleSubmit}>
+        <h3 className="Auth-form-title">Registrarse</h3>
+        <div className="Auth-form-content">
+          <label>Nombre de Usuario</label>
+          <input
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            type="text"
+            className="form-control"
+            placeholder="Nombre de Usuario"
+          />
+        </div>
+        <div className="Auth-form-content">
+          <label>Ingrese su Contraseña</label>
+          <input
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}          
+            type="password"
+            className="form-control"
+            placeholder="Ingrese su Contraseña"
+          />
+        </div>
+        <div className="Auth-form-content">
+          <label>Repita su Contraseña</label>
+          <input
+            value={repetirPassword}
+            onChange={(e) => setRepetirPassword(e.target.value)}        
+            type="password"
+            className="form-control"
+            placeholder="Repita su Contraseña"
+          />        
+          <div className="d-grid gap-1 mt-2">
+            <button type="submit" className="btn btn-primary">
+              Registrarse
+            </button>
+        </div>
+          <div>
+          <Link to="/">Iniciar Sesion</Link>
+          </div>
+        </div>
       </form>
     </div>
-  );
-};
+    </div>
+  )
+}
+
+//   return (
+//     <div className="Auth-form-container">
+//       <form className="Auth-form">
+//         <div className="Auth-form-content">
+//           <h3 className="Auth-form-title">Sign In</h3>
+//           <div className="text-center">
+//             Not registered yet?{" "}
+//             <span className="link-primary" onClick={changeAuthMode}>
+//               Sign Up
+//             </span>
+//           </div>
+//           <div className="form-group mt-3">
+//             <label>Nombre de Usuario</label>
+//             <input
+//               value={username}
+//               onChange={(e) => setUsername(e.target.value)}
+//               type="text"
+//               className="form-control mt-1"
+//               placeholder="Nombre de Usuario"
+//             />
+//           </div>
+//           <div className="form-group mt-3">
+//             <label>Contraseña</label>
+//             <input
+//               value={password}
+//               onChange={(e) => setPassword(e.target.value)}
+//               type="password"
+//               className="form-control mt-1"
+//               placeholder="Contraseña"
+//             />
+//           </div>
+//           <div className="form-group mt-3">
+//             <label>Repetir Contraseña</label>
+//             <input
+//               value={repetirPassword}
+//               onChange={(e) => setRepetirPassword(e.target.value)}
+//               type="password"
+//               className="form-control mt-1"
+//               placeholder="Reperir Contraseña"
+//             />
+//           </div>
+//           <div className="d-grid gap-2 mt-3">
+//             <button type="submit" className="btn btn-primary">
+//               Registrarme
+//             </button>
+//           </div>
+//         </div>
+//       </form>
+//     </div>
+//   )
+// }
 
 export default Registrar;

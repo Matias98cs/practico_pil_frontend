@@ -32,33 +32,44 @@ const Login = () => {
   };
 
   return (
-    <div>
-      <h1>
-        ADMINISTRACION DE DATOS ACADEMISCOS PERSONALES DE ALUMNOS Y PROFESORES
-      </h1>
-      <h4>Login</h4>
-      <form onSubmit={handleSubmit}>
-        <input
-          type="text"
-          name="username"
-          placeholder="Ingrese su usuario"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-        />
-        <input
-          type="password"
-          name="password"
-          placeholder="Ingrese su password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-        />
-        <input type="submit" value="Iniciar Sesion" />
+    <div className="fondo container-fluid">
+    <div className="Auth-form-container">
+      <form onSubmit={handleSubmit} className="Auth-form">
+        <div className="Auth-form-content">
+          <h3 className="Auth-form-title">Inicio de Sesion</h3>
+          <div className="form-group mt-3">
+            <label>Nombre de Usuario</label>
+            <input
+              type="text"
+              className="form-control mt-1"
+              placeholder="Nombre de Usuario"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+            />
+          </div>
+          <div className="form-group mt-3">
+            <label>Contraseña</label>
+            <input
+              type="password"
+              className="form-control mt-1"
+              placeholder="Contraseña"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+            />
+          </div>
+          <div className="d-grid gap-2 mt-3">
+            <button type="submit" className="btn btn-primary" value= "Iniciar Sesion">
+              Iniciar Sesion
+            </button>
+          </div>
+          <nav>
+            <Link to="/registrar">Registrarse</Link>
+          </nav>
+        </div>
       </form>
-      <nav>
-        <Link to="/registrar">Registrarse</Link>
-      </nav>
     </div>
-  );
-};
+    </div>
+  )
+}
 
 export default Login;
