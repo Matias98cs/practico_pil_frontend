@@ -12,7 +12,9 @@
   height: 100vh;
   
 }
-
+.bottom-header{
+  margin: 0.25em;
+}
 .Auth-form {
   width: 420px;
   box-shadow: rgb(0 0 0 / 16%) 1px 1px 10px;
@@ -76,6 +78,9 @@ label {
   flex-direction: column;
   align-items: center;
   text-align: center;
+  margin-top: 240px;
+  padding: 5px;
+  border-radius: 10px;
 }
 .boton-con-imagen2 {
   background-image: url(Imagenes/Carreras.jpg);
@@ -121,4 +126,14 @@ label {
   width: 420px;
   height: 320px;
   margin: 10px;
+}
+
+.person-table {
+  margin: 20px;
+}
+
+
+.tabla-p{
+  margin: 200px;
+  width: 2000px;
 }

@@ -10,9 +10,11 @@ import {
   MDBCollapse,
   MDBBtn
 } from 'mdb-react-ui-kit';
+import { Link, useNavigate } from "react-router-dom";
 
 export default function Header() {
   const [showBasic, setShowBasic] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <header>
@@ -29,25 +31,23 @@ export default function Header() {
           <MDBCollapse navbar show={showBasic}>
             <MDBNavbarNav right className='mb-2 mb-lg-0'>
               <MDBNavbarItem active>
-              <div className="">
+              <Link to="/home">
+              <div className="bottom-header">
               <button className="btn btn-primary">
                inicio
               </button>
               </div>
+              </Link>
               </MDBNavbarItem>
+              <Link to="/">
               <MDBNavbarItem>
-                <MDBNavbarLink href='#'></MDBNavbarLink>
-              </MDBNavbarItem>
-              <MDBNavbarItem>
-                <MDBNavbarLink href='#'></MDBNavbarLink>
-              </MDBNavbarItem>
-              <MDBNavbarItem>
-              <div className="">
+              <div className="bottom-header">
               <button className="btn btn-primary">
                Cerrar Sesion
               </button>
               </div>
               </MDBNavbarItem>
+              </Link>
             </MDBNavbarNav>
           </MDBCollapse>
         </MDBContainer>
@@ -59,7 +59,7 @@ export default function Header() {
         <div className='mask' style={{ backgroundColor: 'rgba(0, 0, 0, 0.6)' }}>
           <div className='d-flex justify-content-center align-items-center h-100'>
             <div className='text-white'>
-              <h1 className='mb-3'>Administracion de datos academicos</h1>
+              <h1 className='mb-3'>Administración de Datos Académicos</h1>
               <h4 className='mb-3'></h4>
             </div>
           </div>

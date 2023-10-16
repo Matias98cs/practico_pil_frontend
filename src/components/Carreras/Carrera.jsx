@@ -15,27 +15,11 @@ import Header from "../Header/Header";
 const data = [
   {
     id: 1,
-    nombre: "Juan",
-    apellido: "Pérez",
-    email: "juan@example.com",
-    birthdate: "1990-01-15",
-    genero: "Masculino",
-    pais: "Argentina",
-    provincia: "Buenos Aires",
-    ciudad: "CABA",
-    barrio: "Palermo"
-},
-  {
-    id: 2,
-    nombre: "Maria",
-    apellido: "López",
-    email: "maria@example.com",
-    birthdate: "1985-05-20",
-    genero: "Femenino",
-    pais: "Argentina",
-    provincia: "Córdoba",
-    ciudad: "Córdoba",
-    barrio: "Nueva Córdoba"
+    universidad: "Universidad Nacional de Cordoba",
+    facultad: "Facultad de Agronomia",
+    campus: "Fuentenueva",
+    programa: "Ciencias Ambientales",
+
 }
 ];
 
@@ -46,19 +30,26 @@ class App extends React.Component {
     modalInsertar: false,
     form: {
       id: "",
-      nombre: "",
-      apellido: "",
-      email: "",
-      birthdate: "",
-      genero: "",
-      pais: "",
-      provincia: "",
-      ciudad: "",
-      barrio: ""
+      universidad: "",
+      facultad: "",
+      campus: "",
+      programa: "",
     },
   };
 
-  
+  handleColumnSearch = (e, column) => {
+    const value = e.target.value;
+    const filteredData = data.filter((item) => {
+      if (column === "id") {
+        return true; // No filtrar la columna "ID"
+      } else {
+        return item[column].toLowerCase().includes(value.toLowerCase());
+      }
+    });
+
+    this.setState({ filteredData });
+  };
+
   mostrarModalActualizar = (dato) => {
     this.setState({
       form: dato,
@@ -85,15 +76,10 @@ class App extends React.Component {
     var arreglo = this.state.data;
     arreglo.map((registro) => {
       if (dato.id == registro.id) {
-        arreglo[contador].nombre = dato.nombre;
-        arreglo[contador].apellido = dato.apellido;
-        arreglo[contador].email = dato.email;
-        arreglo[contador].birthdate = dato.birthdate;
-        arreglo[contador].genero = dato.genero;
-        arreglo[contador].pais = dato.pais;
-        arreglo[contador].provincia = dato.provincia;
-        arreglo[contador].ciudad = dato.ciudad;
-        arreglo[contador].barrio = dato.barrio;
+        arreglo[contador].universidad = dato.universidad;
+        arreglo[contador].facultad = dato.facultad;
+        arreglo[contador].campus = dato.facultad;
+        arreglo[contador].programa = dato.programa;
       }
       contador++;
     });
@@ -136,37 +122,37 @@ class App extends React.Component {
     return (
       <div className="homeimage">
       <Header>
+        
       </Header>
         <Container>
-          <h1>Personas</h1>
+        <h1>Carreras</h1>
         <br />
-          <Button color="success" onClick={()=>this.mostrarModalInsertar()}> + Agregar Nueva Persona</Button>
+          <Button color="success" onClick={()=>this.mostrarModalInsertar()}> + Agregar Carrera</Button>
           <br />
           <br />
           <div className="row mb-2">
             <div className="col-md-3">
-                <input type="text" className="form-control" placeholder="Buscar por Nombre" onChange={(e) => this.handleColumnSearch(e, nombre)}/>
+                <input type="text" className="form-control" placeholder="Buscar por Universidad" onChange={(e) => this.handleColumnSearch(e, universidad)}/>
             </div>
             <div className="col-md-3">
-                <input type="text" className="form-control" placeholder="Buscar por Apellido" onChange={(e) => this.handleColumnSearch(e, apellido)}/>
+                <input type="text" className="form-control" placeholder="Buscar por Facultad" onChange={(e) => this.handleColumnSearch(e, facultad)}/>
             </div>
             <div className="col-md-3">
-                <input type="text" className="form-control" placeholder="Buscar por Email" onChange={(e) => this.handleColumnSearch(e, email)}/>
+                <input type="text" className="form-control" placeholder="Buscar por Campus" onChange={(e) => this.handleColumnSearch(e, campus)}/>
             </div>
+            <div className="col-md-3">
+                <input type="text" className="form-control" placeholder="Buscar por Programa" onChange={(e) => this.handleColumnSearch(e, programa)}/>
+            </div>
+
           </div>
           <Table>
             <thead>
               <tr>
                 <th>ID</th>
-                <th>Nombre</th>
-                <th>Apellido</th>
-                <th>Email</th>
-                <th>Nacimiento</th>
-                <th>Genero</th>
-                <th>Pais</th>
-                <th>Provincia</th>
-                <th>Ciudad</th>
-                <th>Barrio</th>
+                <th>Universidad</th>
+                <th>Facultad</th>
+                <th>Campus</th>
+                <th>Programa</th>
                 <th></th>
               </tr>
             </thead>
@@ -175,15 +161,10 @@ class App extends React.Component {
               {this.state.data.map((dato) => (
                 <tr key={dato.id}>
                   <td>{dato.id}</td>
-                  <td>{dato.nombre}</td>
-                  <td>{dato.apellido}</td>
-                  <td>{dato.email}</td>
-                  <td>{dato.birthdate}</td>
-                  <td>{dato.genero}</td>
-                  <td>{dato.pais}</td>
-                  <td>{dato.provincia}</td>
-                  <td>{dato.ciudad}</td>
-                  <td>{dato.barrio}</td>
+                  <td>{dato.universidad}</td>
+                  <td>{dato.facultad}</td>
+                  <td>{dato.campus}</td>
+                  <td>{dato.programa}</td>
 
                   <td>
                     <Button
@@ -221,111 +202,51 @@ class App extends React.Component {
             
             <FormGroup>
               <label>
-                Nombre: 
+                Universidad: 
               </label>
               <input
                 className="form-control"
-                name="nombre"
+                name="universidad"
                 type="text"
                 onChange={this.handleChange}
-                value={this.state.form.nombre}
+                value={this.state.form.universidad}
               />
             </FormGroup>
             
             <FormGroup>
               <label>
-                Apellido: 
+                Facultad: 
               </label>
               <input
                 className="form-control"
-                name="apellido"
+                name="facultad"
                 type="text"
                 onChange={this.handleChange}
-                value={this.state.form.apellido}
+                value={this.state.form.facultad}
               />
             </FormGroup>
             <FormGroup>
               <label>
-                Email: 
+                Campus: 
               </label>
               <input
                 className="form-control"
-                name="email"
+                name="campus"
                 type="text"
                 onChange={this.handleChange}
-                value={this.state.form.email}
+                value={this.state.form.campus}
               />
             </FormGroup>
             <FormGroup>
               <label>
-                Nacimiento: 
+                Programa: 
               </label>
               <input
                 className="form-control"
-                name="birthdate"
+                name="programa"
                 type="text"
                 onChange={this.handleChange}
-                value={this.state.form.birthdate}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label>
-                Genero: 
-              </label>
-              <input
-                className="form-control"
-                name="genero"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.form.genero}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label>
-                Pais: 
-              </label>
-              <input
-                className="form-control"
-                name="genero"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.form.pais}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label>
-                Provincia: 
-              </label>
-              <input
-                className="form-control"
-                name="provincia"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.form.provincia}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label>
-                Ciudad: 
-              </label>
-              <input
-                className="form-control"
-                name="ciudad"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.form.ciudad}
-              />
-            </FormGroup>
-            <FormGroup>
-              <label>
-                Barrio: 
-              </label>
-              <input
-                className="form-control"
-                name="barrio"
-                type="text"
-                onChange={this.handleChange}
-                value={this.state.form.barrio}
+                value={this.state.form.programa}
               />
             </FormGroup>
           </ModalBody>
@@ -350,7 +271,7 @@ class App extends React.Component {
 
         <Modal isOpen={this.state.modalInsertar}>
           <ModalHeader>
-           <div><h3>Insertar Persona</h3></div>
+           <div><h3>Insertar Carrera</h3></div>
           </ModalHeader>
 
           <ModalBody>
@@ -369,11 +290,11 @@ class App extends React.Component {
             
             <FormGroup>
               <label>
-                Nombre: 
+                Universidad: 
               </label>
               <input
                 className="form-control"
-                name="nombre"
+                name="universidad"
                 type="text"
                 onChange={this.handleChange}
               />
@@ -381,11 +302,11 @@ class App extends React.Component {
             
             <FormGroup>
               <label>
-                Apellido: 
+                Facultad: 
               </label>
               <input
                 className="form-control"
-                name="apellido"
+                name="facultad"
                 type="text"
                 onChange={this.handleChange}
               />
@@ -393,11 +314,11 @@ class App extends React.Component {
 
             <FormGroup>
               <label>
-                Email: 
+                Campus: 
               </label>
               <input
                 className="form-control"
-                name="email"
+                name="campus"
                 type="text"
                 onChange={this.handleChange}
               />
@@ -405,75 +326,16 @@ class App extends React.Component {
 
             <FormGroup>
               <label>
-                Nacimiento: 
+                Programa: 
               </label>
               <input
                 className="form-control"
-                name="birthdate"
+                name="programa"
                 type="text"
                 onChange={this.handleChange}
               />
             </FormGroup>
 
-            <FormGroup>
-              <label>
-                Genero: 
-              </label>
-              <input
-                className="form-control"
-                name="genero"
-                type="text"
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Pais: 
-              </label>
-              <input
-                className="form-control"
-                name="pais"
-                type="text"
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Provincia: 
-              </label>
-              <input
-                className="form-control"
-                name="provincia"
-                type="text"
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Ciudad: 
-              </label>
-              <input
-                className="form-control"
-                name="ciudad"
-                type="text"
-                onChange={this.handleChange}
-              />
-            </FormGroup>
-
-            <FormGroup>
-              <label>
-                Barrio: 
-              </label>
-              <input
-                className="form-control"
-                name="barrio"
-                type="text"
-                onChange={this.handleChange}
-              />
-            </FormGroup>
           </ModalBody>
 
           <ModalFooter>
