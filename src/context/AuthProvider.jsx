@@ -36,6 +36,7 @@ const AuthProvider = ({ children }) => {
 
   const cerrarSesionAuth = () => {
     setAuth({});
+    localStorage.removeItem("token");
   };
 
   return (
