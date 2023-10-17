@@ -20,20 +20,75 @@ import PersonaCard from "./PersonaCard";
 const Personas = () => {
   const [modalActulizar, setModalActulizar] = useState(false);
   const [modalInsertar, setModalInsertar] = useState(false);
-  const [formualario, setFormulario] = useState({
-    id: "",
-    nombre: "",
-    apellido: "",
-    email: "",
-    birthdate: "",
-    genero: "",
-    pais: "",
-    provincia: "",
-    ciudad: "",
-    barrio: "",
-  });
-  const { personas, paginado, paginaSiguiente, paginaAnterior, paginaActual } = usePersonas();
+  const {
+    personas,
+    paginado,
+    paginaSiguiente,
+    paginaAnterior,
+    setInsertarPersona,
+    postPersona,
+  } = usePersonas();
+  const [nombre, setNombre] = useState("");
+  const [apellido, setApellido] = useState("");
+  const [email, setEmail] = useState("");
+  const [nacimiento, setNacimiento] = useState("");
+  const [genero, setGenero] = useState("");
+  const [ciudad, setCiudad] = useState("");
+  const [barrio, setBarrio] = useState("");
+  const [pais, setPais] = useState("");
+  const [provincia, setProvincia] = useState("");
+  const [personaId, setPersonaId] = useState("");
 
+  const handleSubmitPersona = (e) => {
+    e.preventDefault();
+    if (
+      [
+        nombre,
+        apellido,
+        email,
+        nacimiento,
+        genero,
+        ciudad,
+        barrio,
+        pais,
+        provincia,
+        personaId,
+      ].includes("")
+    ) {
+      console.log("Complete todos los campos");
+      return;
+    }
+
+    const fecha = new Date(nacimiento);
+    const dia = fecha.getDate();
+    const mes = fecha.getMonth() + 1;
+    const year = fecha.getFullYear();
+    const fechaFormateada = `${dia}-${mes}-${year}`;
+    const campos = {
+      nombre: nombre,
+      apellido: apellido,
+      email: email,
+      birthdate: fechaFormateada,
+      genero: genero,
+      ciudad: ciudad,
+      barrio: barrio,
+      pais: pais,
+      provincia: provincia,
+      personal_id: personaId,
+    };
+    setInsertarPersona(campos);
+    postPersona();
+    setNombre("");
+    setApellido("");
+    setEmail("");
+    setNacimiento("");
+    setGenero("");
+    setCiudad("");
+    setBarrio("");
+    setProvincia("");
+    setPais("");
+    setPersonaId("");
+  };
   const mostrarModalActualizar = () => {
     setModalActulizar(true);
   };
@@ -109,153 +164,9 @@ const Personas = () => {
             {personas.map((persona) => (
               <PersonaCard dato={persona} key={persona.id} />
             ))}
-            {/* {this.state.data.map((dato) => (
-                <tr key={dato.id}>
-                  <td>{dato.id}</td>
-                  <td>{dato.nombre}</td>
-                  <td>{dato.apellido}</td>
-                  <td>{dato.email}</td>
-                  <td>{dato.birthdate}</td>
-                  <td>{dato.genero}</td>
-                  <td>{dato.pais}</td>
-                  <td>{dato.provincia}</td>
-                  <td>{dato.ciudad}</td>
-                  <td>{dato.barrio}</td>
-
-                  <td>
-                    <Button
-                      color="primary"
-                      onClick={() => this.mostrarModalActualizar(dato)}
-                    >
-                      Editar
-                    </Button>{" "}
-                    <Button color="danger" onClick={()=> this.eliminar(dato)}>Eliminar</Button>
-                  </td>
-                </tr>
-              ))} */}
           </tbody>
         </Table>
       </Container>
-
-      <Modal>
-        <ModalHeader>
-          <div>
-            <h3>Editar Registro</h3>
-          </div>
-        </ModalHeader>
-
-        <ModalBody>
-          <FormGroup>
-            <label>Id:</label>
-
-            <input
-              className="form-control"
-              readOnly
-              type="text"
-              // value={this.state.form.id}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <label>Nombre:</label>
-            <input
-              className="form-control"
-              name="nombre"
-              type="text"
-              // onChange={this.handleChange}
-              // value={this.state.form.nombre}
-            />
-          </FormGroup>
-
-          <FormGroup>
-            <label>Apellido:</label>
-            <input
-              className="form-control"
-              name="apellido"
-              type="text"
-              // onChange={this.handleChange}
-              // value={this.state.form.apellido}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label>Email:</label>
-            <input
-              className="form-control"
-              name="email"
-              type="text"
-              // onChange={this.handleChange}
-              // value={this.state.form.email}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label>Nacimiento:</label>
-            <input
-              className="form-control"
-              name="birthdate"
-              type="text"
-              // onChange={this.handleChange}
-              // value={this.state.form.birthdate}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label>Genero:</label>
-            <input
-              className="form-control"
-              name="genero"
-              type="text"
-              // onChange={this.handleChange}
-              // value={this.state.form.genero}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label>Pais:</label>
-            <input
-              className="form-control"
-              name="genero"
-              type="text"
-              // onChange={this.handleChange}
-              // value={this.state.form.pais}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label>Provincia:</label>
-            <input
-              className="form-control"
-              name="provincia"
-              type="text"
-              // onChange={this.handleChange}
-              // value={this.state.form.provincia}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label>Ciudad:</label>
-            <input
-              className="form-control"
-              name="ciudad"
-              type="text"
-              // onChange={this.handleChange}
-              // value={this.state.form.ciudad}
-            />
-          </FormGroup>
-          <FormGroup>
-            <label>Barrio:</label>
-            <input
-              className="form-control"
-              name="barrio"
-              type="text"
-              // onChange={this.handleChange}
-              // value={this.state.form.barrio}
-            />
-          </FormGroup>
-        </ModalBody>
-
-        <ModalFooter>
-          <Button color="primary">Editar</Button>
-          <Button color="danger" onClick={() => cerrarModalActualizar()}>
-            Cancelar
-          </Button>
-        </ModalFooter>
-      </Modal>
 
       <Modal isOpen={modalInsertar}>
         <ModalHeader>
@@ -266,23 +177,13 @@ const Personas = () => {
 
         <ModalBody>
           <FormGroup>
-            <label>Id:</label>
-
-            <input
-              className="form-control"
-              readOnly
-              type="text"
-              // value={this.state.data.length + 1}
-            />
-          </FormGroup>
-
-          <FormGroup>
             <label>Nombre:</label>
             <input
               className="form-control"
               name="nombre"
               type="text"
-              // onChange={this.handleChange}
+              value={nombre}
+              onChange={(e) => setNombre(e.target.value)}
             />
           </FormGroup>
 
@@ -292,7 +193,8 @@ const Personas = () => {
               className="form-control"
               name="apellido"
               type="text"
-              // onChange={this.handleChange}
+              value={apellido}
+              onChange={(e) => setApellido(e.target.value)}
             />
           </FormGroup>
 
@@ -302,7 +204,8 @@ const Personas = () => {
               className="form-control"
               name="email"
               type="text"
-              // onChange={this.handleChange}
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
             />
           </FormGroup>
 
@@ -311,8 +214,19 @@ const Personas = () => {
             <input
               className="form-control"
               name="birthdate"
-              type="text"
-              // onChange={this.handleChange}
+              type="date"
+              value={nacimiento}
+              onChange={(e) => setNacimiento(e.target.value)}
+            />
+          </FormGroup>
+          <FormGroup>
+            <label>DNI:</label>
+            <input
+              className="form-control"
+              name="DNI"
+              type="number"
+              value={personaId}
+              onChange={(e) => setPersonaId(e.target.value)}
             />
           </FormGroup>
 
@@ -322,7 +236,8 @@ const Personas = () => {
               className="form-control"
               name="genero"
               type="text"
-              // onChange={this.handleChange}
+              value={genero}
+              onChange={(e) => setGenero(e.target.value)}
             />
           </FormGroup>
 
@@ -332,7 +247,8 @@ const Personas = () => {
               className="form-control"
               name="pais"
               type="text"
-              // onChange={this.handleChange}
+              value={pais}
+              onChange={(e) => setPais(e.target.value)}
             />
           </FormGroup>
 
@@ -342,7 +258,8 @@ const Personas = () => {
               className="form-control"
               name="provincia"
               type="text"
-              // onChange={this.handleChange}
+              value={provincia}
+              onChange={(e) => setProvincia(e.target.value)}
             />
           </FormGroup>
 
@@ -352,7 +269,8 @@ const Personas = () => {
               className="form-control"
               name="ciudad"
               type="text"
-              // onChange={this.handleChange}
+              value={ciudad}
+              onChange={(e) => setCiudad(e.target.value)}
             />
           </FormGroup>
 
@@ -362,13 +280,14 @@ const Personas = () => {
               className="form-control"
               name="barrio"
               type="text"
-              // onChange={this.handleChange}
+              value={barrio}
+              onChange={(e) => setBarrio(e.target.value)}
             />
           </FormGroup>
         </ModalBody>
 
         <ModalFooter>
-          <Button color="primary" onClick={() => modalInsertar}>
+          <Button color="primary" onClick={(e) => handleSubmitPersona(e)}>
             Insertar
           </Button>
           <Button

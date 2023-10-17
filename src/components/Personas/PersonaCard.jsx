@@ -9,8 +9,10 @@ import {
   FormGroup,
   ModalFooter,
 } from "reactstrap";
+import usePersonas from "../../hooks/usePersonas";
 
 const PersonaCard = ({ dato }) => {
+  const { eliminarPersona } = usePersonas();
   return (
     <>
       <tr key={dato.id}>
@@ -27,7 +29,9 @@ const PersonaCard = ({ dato }) => {
 
         <td>
           <Button color="primary">Editar</Button>{" "}
-          <Button color="danger">Eliminar</Button>
+          <Button color="danger" onClick={() => eliminarPersona(dato.id)}>
+            Eliminar
+          </Button>
         </td>
       </tr>
     </>
