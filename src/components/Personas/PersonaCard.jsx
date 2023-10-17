@@ -10,6 +10,7 @@ import {
   ModalFooter,
 } from "reactstrap";
 import usePersonas from "../../hooks/usePersonas";
+import { Link } from "react-router-dom";
 
 const PersonaCard = ({ dato }) => {
   const { eliminarPersona } = usePersonas();
@@ -29,7 +30,7 @@ const PersonaCard = ({ dato }) => {
 
         <td>
           <Link to="/Editar">
-          <Button color="primary">Editar</Button>{" "}
+            <Button color="primary">Editar</Button>{" "}
           </Link>
           <Button color="danger" onClick={() => eliminarPersona(dato.id)}>
             Eliminar
