@@ -16,6 +16,7 @@ import {
 import Header from "../Header/Header";
 import usePersonas from "../../hooks/usePersonas";
 import PersonaCard from "./PersonaCard";
+import {Link} from "react-router-dom"
 
 const Personas = () => {
   const [modalActulizar, setModalActulizar] = useState(false);
@@ -299,7 +300,7 @@ const Personas = () => {
           </Button>
         </ModalFooter>
       </Modal>
-      <div class="container-fluid text-center">
+      <div className="container-fluid text-center">
         <div className="row justify-content-center align-items-center">
           <div className="col-1 " style={{ marginRight: "-40px" }}>
             <button
@@ -315,12 +316,14 @@ const Personas = () => {
             </p>
           </div>
           <div className="col-1 offset-0" style={{ marginLeft: "-140px" }}>
+            <Link to="/Editar">
             <button
               className="btn btn-primary mx-auto mb-2"
               onClick={paginaSiguiente}
             >
               Siguiente
             </button>
+            </Link>
           </div>
         </div>
       </div>
@@ -329,3 +332,4 @@ const Personas = () => {
 };
 
 export default Personas;
+ 
