@@ -299,7 +299,7 @@ const Personas = () => {
           </Button>
         </ModalFooter>
       </Modal>
-      <div class="container-fluid text-center">
+      <div className="container-fluid text-center">
         <div className="row justify-content-center align-items-center">
           <div className="col-1 " style={{ marginRight: "-40px" }}>
             <button
