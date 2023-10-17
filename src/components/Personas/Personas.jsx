@@ -16,6 +16,7 @@ import {
 import Header from "../Header/Header";
 import usePersonas from "../../hooks/usePersonas";
 import PersonaCard from "./PersonaCard";
+import {Link} from "react-router-dom"
 
 const Personas = () => {
   const [modalActulizar, setModalActulizar] = useState(false);
@@ -329,3 +330,4 @@ const Personas = () => {
 };
 
 export default Personas;
+ 

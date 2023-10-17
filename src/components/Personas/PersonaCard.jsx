@@ -28,7 +28,9 @@ const PersonaCard = ({ dato }) => {
         <td>{dato.barrio}</td>
 
         <td>
+          <Link to="/Editar">
           <Button color="primary">Editar</Button>{" "}
+          </Link>
           <Button color="danger" onClick={() => eliminarPersona(dato.id)}>
             Eliminar
           </Button>

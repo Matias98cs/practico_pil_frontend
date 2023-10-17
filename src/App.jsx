@@ -13,6 +13,7 @@ import Universidades from "./components/Universidades/Universidades";
 import Facultades from "./components/Facultades/Facultades";
 import Campus from "./components/Campus/Campus";
 import Programas from "./components/Programas/Programas";
+import Editar from "./components/Carreras_Personas/Editar_Persona"
 
 function App() {
   return (
@@ -34,6 +35,7 @@ function App() {
             <Route path="/Facultades" element={<Facultades />} />
             <Route path="/Campus" element={<Campus />} />
             <Route path="/Programas" element={<Programas />} />
+            <Route path="/Editar" element={<Editar />} />
           </Routes>
         </PersonasProvider>
       </AuthProvider>

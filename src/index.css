@@ -141,3 +141,20 @@ label {
 .botton_a{
 padding: 10px 15px;
 }
+.content-container {
+  display: flex;
+  border: 1px solid #ccc;
+  border-radius: 10px;
+  padding: 20px;
+  max-width: 400px;
+}
+
+.container-with-margin {
+  margin: 50px; /* Ajusta el valor según tus necesidades */
+  margin-left: 40px;
+  margin-right: 40px;
+}
+.container-wider {
+  max-width: 800px; /* Ajusta el valor según tus necesidades */
+  width: 100%; /* Hace que el contenedor sea 100% del ancho del padre si se ensancha */
+}
