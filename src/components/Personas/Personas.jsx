@@ -32,7 +32,7 @@ const Personas = () => {
     ciudad: "",
     barrio: "",
   });
-  const { personas, paginado, paginaSiguiente, paginaAnterior } = usePersonas();
+  const { personas, paginado, paginaSiguiente, paginaAnterior, paginaActual } = usePersonas();
 
   const mostrarModalActualizar = () => {
     setModalActulizar(true);
@@ -379,10 +379,19 @@ const Personas = () => {
           </Button>
         </ModalFooter>
       </Modal>
-      <div>
-        <button onClick={paginaAnterior}>Anterior</button>
-        <button onClick={paginaSiguiente}>Siguiente</button>
+      <div class="container-fluid text-center"> 
+      <div className="row justify-content-center align-items-center">
+        <div className="col-1 " style={{ marginRight: '-40px' }}>
+        <button className="btn btn-primary mx-auto mb-2" onClick={paginaAnterior}>Anterior</button>
+        </div>
+          <div className="col-1">
+            <p className="my-2  bg-white" style={{ maxWidth: '30px' }}>{paginaActual}</p>
+          </div>
+        <div className="col-1 offset-0"style={{ marginLeft: '-140px' }}>
+        <button className="btn btn-primary mx-auto mb-2" onClick={paginaSiguiente}>Siguiente</button>
+        </div>
       </div>
+    </div>
     </div>
   );
 };

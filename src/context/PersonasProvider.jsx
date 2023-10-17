@@ -44,6 +44,7 @@ const PersonasProvider = ({ children }) => {
         paginado,
         paginaSiguiente,
         paginaAnterior,
+        paginaActual,
       }}
     >
       {children}
