@@ -316,14 +316,12 @@ const Personas = () => {
             </p>
           </div>
           <div className="col-1 offset-0" style={{ marginLeft: "-140px" }}>
-            <Link to="/Editar">
             <button
               className="btn btn-primary mx-auto mb-2"
               onClick={paginaSiguiente}
             >
               Siguiente
             </button>
-            </Link>
           </div>
         </div>
       </div>
