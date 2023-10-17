@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import "bootstrap/dist/css/bootstrap.min.css";
 import {
   Table,
@@ -9,36 +9,13 @@ import {
   ModalBody,
   FormGroup,
   ModalFooter,
+  Pagination,
+  PaginationItem,
+  PaginationLink,
 } from "reactstrap";
 import Header from "../Header/Header";
 import usePersonas from "../../hooks/usePersonas";
-
-// const data = [
-//   {
-//     id: 1,
-//     nombre: "Juan",
-//     apellido: "Pérez",
-//     email: "juan@example.com",
-//     birthdate: "1990-01-15",
-//     genero: "Masculino",
-//     pais: "Argentina",
-//     provincia: "Buenos Aires",
-//     ciudad: "CABA",
-//     barrio: "Palermo",
-//   },
-//   {
-//     id: 2,
-//     nombre: "Maria",
-//     apellido: "López",
-//     email: "maria@example.com",
-//     birthdate: "1985-05-20",
-//     genero: "Femenino",
-//     pais: "Argentina",
-//     provincia: "Córdoba",
-//     ciudad: "Córdoba",
-//     barrio: "Nueva Córdoba",
-//   },
-// ];
+import PersonaCard from "./PersonaCard";
 
 const Personas = () => {
   const [modalActulizar, setModalActulizar] = useState(false);
@@ -55,8 +32,7 @@ const Personas = () => {
     ciudad: "",
     barrio: "",
   });
-  const { personas } = usePersonas();
-  console.log(personas);
+  const { personas, paginado, paginaSiguiente, paginaAnterior } = usePersonas();
 
   const mostrarModalActualizar = () => {
     setModalActulizar(true);
@@ -74,62 +50,8 @@ const Personas = () => {
     setModalInsertar(false);
   };
 
-  // const editar = (dato) => {
-  //   var contador = 0;
-  //   var arreglo = this.state.data;
-  //   arreglo.map((registro) => {
-  //     if (dato.id == registro.id) {
-  //       arreglo[contador].nombre = dato.nombre;
-  //       arreglo[contador].apellido = dato.apellido;
-  //       arreglo[contador].email = dato.email;
-  //       arreglo[contador].birthdate = dato.birthdate;
-  //       arreglo[contador].genero = dato.genero;
-  //       arreglo[contador].pais = dato.pais;
-  //       arreglo[contador].provincia = dato.provincia;
-  //       arreglo[contador].ciudad = dato.ciudad;
-  //       arreglo[contador].barrio = dato.barrio;
-  //     }
-  //     contador++;
-  //   });
-  //   this.setState({ data: arreglo, modalActualizar: false });
-  // };
-
-  // const eliminar = (dato) => {
-  //   var opcion = window.confirm(
-  //     "Estás Seguro que deseas Eliminar el elemento " + dato.id
-  //   );
-  //   if (opcion == true) {
-  //     var contador = 0;
-  //     var arreglo = this.state.data;
-  //     arreglo.map((registro) => {
-  //       if (dato.id == registro.id) {
-  //         arreglo.splice(contador, 1);
-  //       }
-  //       contador++;
-  //     });
-  //     this.setState({ data: arreglo, modalActualizar: false });
-  //   }
-  // };
-
-  // const insertar = () => {
-  //   var valorNuevo = { ...this.state.form };
-  //   valorNuevo.id = this.state.data.length + 1;
-  //   var lista = this.state.data;
-  //   lista.push(valorNuevo);
-  //   this.setState({ modalInsertar: false, data: lista });
-  // };
-
-  // const handleChange = (e) => {
-  //   this.setState({
-  //     form: {
-  //       ...this.state.form,
-  //       [e.target.name]: e.target.value,
-  //     },
-  //   });
-  // };
-
   return (
-    <div className="homeimage">
+    <div className="homeimage overflow-auto">
       <Header></Header>
       <Container>
         <h1>Personas</h1>
@@ -184,6 +106,9 @@ const Personas = () => {
           </thead>
 
           <tbody>
+            {personas.map((persona) => (
+              <PersonaCard dato={persona} key={persona.id} />
+            ))}
             {/* {this.state.data.map((dato) => (
                 <tr key={dato.id}>
                   <td>{dato.id}</td>
@@ -454,6 +379,10 @@ const Personas = () => {
           </Button>
         </ModalFooter>
       </Modal>
+      <div>
+        <button onClick={paginaAnterior}>Anterior</button>
+        <button onClick={paginaSiguiente}>Siguiente</button>
+      </div>
     </div>
   );
 };
