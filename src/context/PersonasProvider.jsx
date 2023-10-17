@@ -76,6 +76,7 @@ const PersonasProvider = ({ children }) => {
         setInsertarPersona,
         postPersona,
         eliminarPersona,
+        paginaActual,
       }}
     >
       {children}
