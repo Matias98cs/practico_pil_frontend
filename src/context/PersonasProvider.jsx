@@ -18,6 +18,12 @@ const PersonasProvider = ({ children }) => {
 
   const [dataPersona, setDataPersona] = useState({});
   const [activo, setActivo] = useState(false);
+
+  // options
+  const [facuOption, setFacuOption] = useState([]);
+  const [campusOption, setCampusOption] = useState([]);
+  const [programaOption, setProgramasOption] = useState([]);
+
   useEffect(() => {
     const obtenerPersonas = async () => {
       try {
@@ -168,6 +174,84 @@ const PersonasProvider = ({ children }) => {
     }
   };
 
+  const obtenerFacuOption = async (nombUni) => {
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:9001/obtener_facultad_campus_programa/obtener_facultades",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ universidad: nombUni }),
+        }
+      );
+      const resultado = await response.json();
+      setFacuOption(resultado.Resultado);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const obtenerCampusOption = async (nomUni, nomFacu) => {
+    const data = {
+      universidad: nomUni,
+      facultad: nomFacu,
+    };
+    try {
+      const response = await fetch(
+        "http://127.0.0.1:9001/obtener_facultad_campus_programa/obtener_campus",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        }
+      );
+      const resultado = await response.json();
+      setCampusOption(resultado.Resultado);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const obtenerProgramaOption = async (nomUni, nomFacu, nomCampu) => {
+    try {
+      const data = {
+        universidad: nomUni,
+        facultad: nomFacu,
+        campus: nomCampu,
+      };
+      try {
+        const response = await fetch(
+          "http://127.0.0.1:9001/obtener_facultad_campus_programa/obtener_programas",
+          {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(data),
+          }
+        );
+        const resultado = await response.json();
+        setProgramasOption(resultado.Resultado);
+      } catch (error) {
+        console.log(error);
+      }
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const asignarCarreraPersona = async (dataCarrera) => {
+    try {
+      const response = await fetch("http://127.0.0.1:9001/asignar-carrera", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(dataCarrera),
+      });
+      const resultado = await response.json();
+      setActivo(!activo);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <PersonasContext.Provider
       value={{
@@ -189,6 +273,13 @@ const PersonasProvider = ({ children }) => {
         editarPersona,
         bajaCarrera,
         activo,
+        obtenerFacuOption,
+        facuOption,
+        obtenerCampusOption,
+        campusOption,
+        obtenerProgramaOption,
+        programaOption,
+        asignarCarreraPersona,
       }}
     >
       {children}

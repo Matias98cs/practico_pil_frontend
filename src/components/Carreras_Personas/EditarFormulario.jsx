@@ -85,19 +85,7 @@ const EditarFormulario = () => {
       provincia: provincia,
       personal_id: personaId,
     };
-    console.log(campos);
     editarPersona(campos);
-    // setInsertarPersona(campos);
-    // setNombre("");
-    // setApellido("");
-    // setEmail("");
-    // setNacimiento("");
-    // setGenero("");
-    // setCiudad("");
-    // setBarrio("");
-    // setProvincia("");
-    // setPais("");
-    // setPersonaId("");
   };
 
   return (

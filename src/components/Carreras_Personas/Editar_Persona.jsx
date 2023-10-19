@@ -23,14 +23,13 @@ import EditarFormulario from "./EditarFormulario";
 
 const Editar = () => {
   const { id } = useParams();
-  // const { obtenerUnaPersona, dataPersona } = usePersonas();
   const [carrerasPersona, setCarrerasPersona] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
-  const [selectedOption1, setSelectedOption1] = useState("");
-  const [selectedOption2, setSelectedOption2] = useState("");
-  const [selectedOption3, setSelectedOption3] = useState("");
-  const [selectedOption4, setSelectedOption4] = useState("");
-  const [selectedOption5, setSelectedOption5] = useState("");
+  const [selectUniversidad, setSelectUniversidad] = useState("");
+  const [selectFacu, setSelectFacu] = useState("");
+  const [selectCampus, setSelectCampus] = useState("");
+  const [selectPrograma, setSelectedPrograma] = useState("");
+  const [selectRol, setSelectRol] = useState("");
   const [modalActulizar, setModalActulizar] = useState(false);
   const [modalInsertar, setModalInsertar] = useState(false);
   const {
@@ -43,36 +42,33 @@ const Editar = () => {
     paginaActual,
     setDataPersona,
     activo,
+    universidades,
+    obtenerFacuOption,
+    facuOption,
+    obtenerCampusOption,
+    campusOption,
+    obtenerProgramaOption,
+    programaOption,
+    asignarCarreraPersona,
   } = usePersonas();
   useEffect(() => {
     const obtenerPersona = async () => {
       try {
         const response = await fetch(`http://127.0.0.1:9001/persona/${id}`);
-
-        const resultado = await response.json();
-        setDataPersona(resultado.persona);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    obtenerPersona();
-  }, [id]);
-
-  useEffect(() => {
-    const obtenerCarreras = async () => {
-      try {
         const response_carrera = await fetch(
           `http://127.0.0.1:9001/carrera-persona/${id}`
         );
 
+        const resultado = await response.json();
+        setDataPersona(resultado.persona);
         const resultado_carrera = await response_carrera.json();
         setCarrerasPersona(resultado_carrera.Resultado);
       } catch (error) {
         console.log(error);
       }
     };
-    obtenerCarreras();
-  }, [activo]);
+    obtenerPersona();
+  }, [id, activo]);
 
   const mostrarModalActualizar = () => {
     setModalActulizar(true);
@@ -88,6 +84,47 @@ const Editar = () => {
 
   const cerrarModalInsertar = () => {
     setModalInsertar(false);
+  };
+
+  const asignarCarrera = (nombreUni) => {
+    setSelectUniversidad(nombreUni);
+    obtenerFacuOption(nombreUni);
+  };
+
+  const optionFacultades = (nombreFacu) => {
+    setSelectFacu(nombreFacu);
+    obtenerCampusOption(selectUniversidad, nombreFacu);
+  };
+
+  const optionCampus = (nombreCampus) => {
+    setSelectCampus(nombreCampus);
+    obtenerProgramaOption(selectUniversidad, selectFacu, nombreCampus);
+  };
+
+  const insertarCarrera = (e) => {
+    e.preventDefault();
+    if (
+      [
+        selectUniversidad,
+        selectFacu,
+        selectPrograma,
+        selectPrograma,
+        setSelectRol,
+      ].includes("")
+    ) {
+      console.log("Selecciona todos los campos");
+      return;
+    }
+    let carrera = {
+      universidad: selectUniversidad,
+      facultad: selectFacu,
+      campus: selectCampus,
+      programa: selectPrograma,
+      tipo: selectRol,
+      id_persona: id,
+    };
+    asignarCarreraPersona(carrera);
+    setModalActulizar(!modalActulizar);
   };
 
   return (
@@ -162,39 +199,98 @@ const Editar = () => {
           <ModalHeader>Modal con Select Buttons</ModalHeader>
           <ModalBody>
             <FormGroup>
-              <Label for="option1">Opción 1</Label>
+              <Label for="option1">Universidades</Label>
               <Input
                 type="select"
                 name="select"
                 id="option1"
-                value={selectedOption1}
-                onChange={(e) => setSelectedOption1(e.target.value)}
+                value={selectUniversidad}
+                onChange={(e) => asignarCarrera(e.target.value)}
               >
-                <option value="">Seleccionar opción</option>
-                <option value="opcion1-1">Opción 1.1</option>
-                <option value="opcion1-2">Opción 1.2</option>
-                <option value="opcion1-3">Opción 1.3</option>
+                <option value="">Seleccionar Universidad</option>
+                {universidades?.map((uni) => (
+                  <>
+                    <option key={uni.nombre} value={uni.nombre}>
+                      {uni.nombre}
+                    </option>
+                  </>
+                ))}
               </Input>
             </FormGroup>
             <FormGroup>
-              <Label for="option2">Opción 2</Label>
+              <Label for="option2">Facultades</Label>
               <Input
                 type="select"
                 name="select"
                 id="option2"
-                value={selectedOption2}
-                onChange={(e) => setSelectedOption2(e.target.value)}
+                value={selectFacu}
+                onChange={(e) => optionFacultades(e.target.value)}
               >
-                <option value="">Seleccionar opción</option>
-                <option value="opcion2-1">Opción 2.1</option>
-                <option value="opcion2-2">Opción 2.2</option>
-                <option value="opcion2-3">Opción 2.3</option>
+                <option value="">Seleccionar Facultad</option>
+                {facuOption?.map((facu) => (
+                  <>
+                    <option key={facu.nombre} value={facu.nombre}>
+                      {facu.nombre}
+                    </option>
+                  </>
+                ))}
               </Input>
             </FormGroup>
-            {/* Repite el bloque anterior para las otras opciones 3, 4 y 5 */}
+            <FormGroup>
+              <Label for="option2">Campus</Label>
+              <Input
+                type="select"
+                name="select"
+                id="option2"
+                value={selectCampus}
+                onChange={(e) => optionCampus(e.target.value)}
+              >
+                <option value="">Seleccionar Campus</option>
+                {campusOption?.map((campu) => (
+                  <>
+                    <option key={campu.id} value={campu.nombre}>
+                      {campu.nombre}
+                    </option>
+                  </>
+                ))}
+              </Input>
+            </FormGroup>
+            <FormGroup>
+              <Label for="option2">Programa</Label>
+              <Input
+                type="select"
+                name="select"
+                id="option2"
+                value={selectPrograma}
+                onChange={(e) => setSelectedPrograma(e.target.value)}
+              >
+                <option value="">Seleccionar Programa</option>
+                {programaOption?.map((programa) => (
+                  <>
+                    <option key={programa.id} value={programa.nombre}>
+                      {programa.nombre}
+                    </option>
+                  </>
+                ))}
+              </Input>
+            </FormGroup>
+            <FormGroup>
+              <Label for="option2">Rol</Label>
+              <Input
+                type="select"
+                name="select"
+                id="option2"
+                value={selectRol}
+                onChange={(e) => setSelectRol(e.target.value)}
+              >
+                <option value="">Seleccionar Rol</option>
+                <option value="Alumno">Alumno</option>
+                <option value="Profesor">Profesor</option>
+              </Input>
+            </FormGroup>
           </ModalBody>
           <ModalFooter>
-            <Button color="success" onClick={cerrarModalInsertar}>
+            <Button color="success" onClick={(e) => insertarCarrera(e)}>
               Guardar
             </Button>
             <Button color="danger" onClick={cerrarModalInsertar}>
