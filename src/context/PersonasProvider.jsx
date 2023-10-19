@@ -17,8 +17,7 @@ const PersonasProvider = ({ children }) => {
   const [programas, setProgramas] = useState([]);
 
   const [dataPersona, setDataPersona] = useState({});
-  const [carreraPersona, setCarreraPersona] = useState([]);
-
+  const [activo, setActivo] = useState(false);
   useEffect(() => {
     const obtenerPersonas = async () => {
       try {
@@ -152,6 +151,23 @@ const PersonasProvider = ({ children }) => {
     }
   };
 
+  const bajaCarrera = async (id) => {
+    const res = { id: id };
+    try {
+      const response = fetch(
+        "http://127.0.0.1:9001/eliminar-carrera/eliminar",
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(res),
+        }
+      );
+      setActivo(!activo);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <PersonasContext.Provider
       value={{
@@ -171,6 +187,8 @@ const PersonasProvider = ({ children }) => {
         setDataPersona,
         dataPersona,
         editarPersona,
+        bajaCarrera,
+        activo,
       }}
     >
       {children}

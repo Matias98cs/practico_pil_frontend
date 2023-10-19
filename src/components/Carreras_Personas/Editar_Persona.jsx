@@ -42,19 +42,14 @@ const Editar = () => {
     postPersona,
     paginaActual,
     setDataPersona,
+    activo,
   } = usePersonas();
   useEffect(() => {
     const obtenerPersona = async () => {
       try {
         const response = await fetch(`http://127.0.0.1:9001/persona/${id}`);
-        const response_carrera = await fetch(
-          `http://127.0.0.1:9001/carrera-persona/${id}`
-        );
 
         const resultado = await response.json();
-        const resultado_carrera = await response_carrera.json();
-        setCarrerasPersona(resultado_carrera.Resultado);
-        // setPersonaData(resultado.persona);
         setDataPersona(resultado.persona);
       } catch (error) {
         console.log(error);
@@ -62,6 +57,22 @@ const Editar = () => {
     };
     obtenerPersona();
   }, [id]);
+
+  useEffect(() => {
+    const obtenerCarreras = async () => {
+      try {
+        const response_carrera = await fetch(
+          `http://127.0.0.1:9001/carrera-persona/${id}`
+        );
+
+        const resultado_carrera = await response_carrera.json();
+        setCarrerasPersona(resultado_carrera.Resultado);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    obtenerCarreras();
+  }, [activo]);
 
   const mostrarModalActualizar = () => {
     setModalActulizar(true);
@@ -134,6 +145,7 @@ const Editar = () => {
               <th>Programa</th>
               <th>Campus</th>
               <th>Rol</th>
+              <th>Estado</th>
               <th></th>
             </tr>
           </thead>

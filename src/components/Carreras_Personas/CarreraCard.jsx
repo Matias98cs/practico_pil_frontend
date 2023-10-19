@@ -10,8 +10,10 @@ import {
   FormGroup,
   ModalFooter,
 } from "reactstrap";
+import usePersonas from "../../hooks/usePersonas";
 
 const CarreraCard = ({ dato }) => {
+  const { bajaCarrera } = usePersonas();
   return (
     <>
       <tr key={dato.id}>
@@ -21,11 +23,14 @@ const CarreraCard = ({ dato }) => {
         <td>{dato.programa}</td>
         <td>{dato.campus}</td>
         <td>{dato.rol}</td>
+        <td>{dato.activo ? "Activo" : "Baja"}</td>
         <td>
           <Link to="">
             <Button color="primary">Editar</Button>{" "}
           </Link>
-          <Button color="danger">Eliminar</Button>
+          <Button color="danger" onClick={() => bajaCarrera(dato.id)}>
+            Eliminar
+          </Button>
         </td>
       </tr>
     </>
