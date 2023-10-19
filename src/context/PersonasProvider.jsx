@@ -24,6 +24,10 @@ const PersonasProvider = ({ children }) => {
   const [campusOption, setCampusOption] = useState([]);
   const [programaOption, setProgramasOption] = useState([]);
 
+  const [dataUnaPersona, setDataUnaPersona] = useState({});
+  const [carreraPersona, setCarreraPersona] = useState([]);
+  const [cargando, setCargando] = useState(false);
+
   useEffect(() => {
     const obtenerPersonas = async () => {
       try {
@@ -252,6 +256,34 @@ const PersonasProvider = ({ children }) => {
     }
   };
 
+  const unaPersona = async (id) => {
+    setCargando(true);
+    try {
+      const response = await fetch(`http://127.0.0.1:9001/persona/${id}`);
+      const resultado = await response.json();
+      setDataUnaPersona(resultado.persona);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setCargando(false);
+    }
+  };
+
+  const obtenerCarrerasPersonas = async (id) => {
+    setCargando(true);
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:9001/carrera-persona/${id}`
+      );
+      const resultado = await response.json();
+      setCarreraPersona(resultado.Resultado);
+    } catch (error) {
+      console.log(error);
+    } finally {
+      setCargando(false);
+    }
+  };
+
   return (
     <PersonasContext.Provider
       value={{
@@ -280,6 +312,12 @@ const PersonasProvider = ({ children }) => {
         obtenerProgramaOption,
         programaOption,
         asignarCarreraPersona,
+        unaPersona,
+        dataUnaPersona,
+        setDataUnaPersona,
+        cargando,
+        obtenerCarrerasPersonas,
+        carreraPersona,
       }}
     >
       {children}

@@ -19,7 +19,7 @@ import { useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 
 const EditarFormulario = () => {
-  const { dataPersona, editarPersona } = usePersonas();
+  const { dataUnaPersona, editarPersona } = usePersonas();
   const { id } = useParams();
   const [nombre, setNombre] = useState("");
   const [apellido, setApellido] = useState("");
@@ -33,17 +33,17 @@ const EditarFormulario = () => {
   const [personaId, setPersonaId] = useState("");
 
   useEffect(() => {
-    if (dataPersona.id) {
-      setNombre(dataPersona.nombre);
-      setApellido(dataPersona.apellido);
-      setEmail(dataPersona.email);
-      setNacimiento(dataPersona.birthdate);
-      setGenero(dataPersona.genero);
-      setCiudad(dataPersona.ciudad);
-      setBarrio(dataPersona.barrio);
-      setPais(dataPersona.pais);
-      setProvincia(dataPersona.provincia);
-      setPersonaId(dataPersona.personal_id);
+    if (dataUnaPersona.id) {
+      setNombre(dataUnaPersona?.nombre);
+      setApellido(dataUnaPersona.apellido);
+      setEmail(dataUnaPersona.email);
+      setNacimiento(dataUnaPersona.birthdate);
+      setGenero(dataUnaPersona.genero);
+      setCiudad(dataUnaPersona.ciudad);
+      setBarrio(dataUnaPersona.barrio);
+      setPais(dataUnaPersona.pais);
+      setProvincia(dataUnaPersona.provincia);
+      setPersonaId(dataUnaPersona.personal_id);
     }
   }, [id]);
 

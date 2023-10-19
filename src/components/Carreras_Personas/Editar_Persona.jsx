@@ -23,7 +23,6 @@ import EditarFormulario from "./EditarFormulario";
 
 const Editar = () => {
   const { id } = useParams();
-  const [carrerasPersona, setCarrerasPersona] = useState([]);
   const [modalOpen, setModalOpen] = useState(false);
   const [selectUniversidad, setSelectUniversidad] = useState("");
   const [selectFacu, setSelectFacu] = useState("");
@@ -33,14 +32,6 @@ const Editar = () => {
   const [modalActulizar, setModalActulizar] = useState(false);
   const [modalInsertar, setModalInsertar] = useState(false);
   const {
-    personas,
-    paginado,
-    paginaSiguiente,
-    paginaAnterior,
-    setInsertarPersona,
-    postPersona,
-    paginaActual,
-    setDataPersona,
     activo,
     universidades,
     obtenerFacuOption,
@@ -50,24 +41,15 @@ const Editar = () => {
     obtenerProgramaOption,
     programaOption,
     asignarCarreraPersona,
+    unaPersona,
+    obtenerCarrerasPersonas,
+    cargando,
+    carreraPersona,
   } = usePersonas();
-  useEffect(() => {
-    const obtenerPersona = async () => {
-      try {
-        const response = await fetch(`http://127.0.0.1:9001/persona/${id}`);
-        const response_carrera = await fetch(
-          `http://127.0.0.1:9001/carrera-persona/${id}`
-        );
 
-        const resultado = await response.json();
-        setDataPersona(resultado.persona);
-        const resultado_carrera = await response_carrera.json();
-        setCarrerasPersona(resultado_carrera.Resultado);
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    obtenerPersona();
+  useEffect(() => {
+    unaPersona(id);
+    obtenerCarrerasPersonas(id);
   }, [id, activo]);
 
   const mostrarModalActualizar = () => {
@@ -124,8 +106,9 @@ const Editar = () => {
       id_persona: id,
     };
     asignarCarreraPersona(carrera);
-    setModalActulizar(!modalActulizar);
   };
+
+  if (cargando) return "Cargando...";
 
   return (
     <div className="homeimage overflow-auto">
@@ -188,7 +171,7 @@ const Editar = () => {
           </thead>
 
           <tbody>
-            {carrerasPersona?.map((carrera) => (
+            {carreraPersona?.map((carrera) => (
               <CarreraCard dato={carrera} key={carrera.id} />
             ))}
           </tbody>
