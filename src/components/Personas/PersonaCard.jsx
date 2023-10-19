@@ -29,7 +29,7 @@ const PersonaCard = ({ dato }) => {
         <td>{dato.barrio}</td>
 
         <td>
-          <Link to="/Editar">
+          <Link to={`/Editar/${dato.id}`}>
             <Button color="primary">Editar</Button>{" "}
           </Link>
           <Button color="danger" onClick={() => eliminarPersona(dato.id)}>
