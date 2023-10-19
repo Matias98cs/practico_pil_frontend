@@ -15,6 +15,10 @@ const PersonasProvider = ({ children }) => {
   const [facultades, setFacultades] = useState([]);
   const [campus, setCampus] = useState([]);
   const [programas, setProgramas] = useState([]);
+
+  const [dataPersona, setDataPersona] = useState({});
+  const [carreraPersona, setCarreraPersona] = useState([]);
+
   useEffect(() => {
     const obtenerPersonas = async () => {
       try {
@@ -131,6 +135,23 @@ const PersonasProvider = ({ children }) => {
     }
   };
 
+  const editarPersona = async (personaEdit) => {
+    try {
+      const response = await fetch(
+        `http://127.0.0.1:9001/personas/${personaEdit.persona_id}/editar`,
+        {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(personaEdit),
+        }
+      );
+      const resultado = await response.json();
+      console.log(resultado);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   return (
     <PersonasContext.Provider
       value={{
@@ -147,6 +168,9 @@ const PersonasProvider = ({ children }) => {
         facultades,
         campus,
         programas,
+        setDataPersona,
+        dataPersona,
+        editarPersona,
       }}
     >
       {children}
